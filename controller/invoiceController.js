@@ -1,7 +1,7 @@
 const Invoice = require('../model/invoice');
 const sgMail = require('@sendgrid/mail');
 const res = require('express/lib/response');
-sgMail.setApiKey(process.env.sendgridApi);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
 // addinvoice
@@ -217,8 +217,8 @@ const sendMail = async(invoiceDetail) => {
       
                                       <td>
                                           Invoice #: ${invoiceDetail._id}<br />
-                                          Created: ${invoiceDetail.invoiceDate}<br />
-                                          Due: ${invoiceDetail.dueDate}
+                                          Created: ${invoiceDetail.invoiceDate.getDate()+"-"+invoiceDetail.invoiceDate.getMonth()+"-"+invoiceDetail.invoiceDate.getFullYear()}<br />
+                                          Due: ${invoiceDetail.dueDate.getDate()+"-"+invoiceDetail.dueDate.getMonth()+"-"+invoiceDetail.dueDate.getFullYear()}
                                       </td>
                                   </tr>
                               </table>
@@ -230,11 +230,13 @@ const sendMail = async(invoiceDetail) => {
                               <table>
                                   <tr>
                                       <td>
+                                        <h3>Bill from:-</h3>
                                           TaxAdda, Inc.<br />
                                           ${invoiceDetail.sellerAddress}
                                       </td>
       
                                       <td>
+                                      <h3>Bill to:-</h3>
                                           ${invoiceDetail.customerName}<br />
                                           ${invoiceDetail.customerEmail}<br />
                                           ${invoiceDetail.customerAddress}
@@ -243,20 +245,17 @@ const sendMail = async(invoiceDetail) => {
                               </table>
                           </td>
                       </tr>
-                   
                       <tr class="heading">
                           <td>Item</td>
-      
                           <td>Price</td>
                       </tr>
                      ${items}
                       <tr class="total">
                           <td></td>
-      
                           <td>Total:₹${invoiceDetail.totalAmt}</td>
                       </tr>
                   </table>
-                  <footer><p>${invoiceDetail.note}</p></footer>
+                  <footer><p>Note:-${invoiceDetail.note}</p></footer>
               </div>
           </body>
       </html>`,

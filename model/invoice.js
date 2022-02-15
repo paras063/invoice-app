@@ -73,7 +73,6 @@ const invoiceSchema = new mongoose.Schema({
     },
     note:{
         type:String,
-        default:"thank you for your business",
         trim:true
     }
 })
