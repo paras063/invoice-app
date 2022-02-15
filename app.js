@@ -40,4 +40,5 @@ mongoose.connect(
 const PORT = process.env.PORT;
 app.listen(PORT,()=>{
     console.log(`connected to port ${PORT}`);
+    console.log(process.env.SENDGRID_API_KEY)
 })
